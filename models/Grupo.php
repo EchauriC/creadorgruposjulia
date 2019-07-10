@@ -1,5 +1,4 @@
 <?php
-
 class Grupo {
   
 public function buscar(){
@@ -18,12 +17,11 @@ public function buscar(){
         if ($especialidad == $valor[1]){
             array_push($especialistas, $valor[0]);
         } //llenamos el array con la gente que cumple la condicion
-
     }
 
     //si hay gente suficiente entre tus especialistas , reordenamos el array y sacamos tantos como hemos pedido
     if(count($especialistas)>=$numero){
-        echo 'Tu equipo se compone de: '.'<br>'.'<hr>';
+       
         shuffle($especialistas);
 
         $contador =1;

@@ -3,7 +3,6 @@
 require_once 'models/Grupo.php';
 
 $grupo= new Grupo;
-$grupo->buscar();
 
 ?>
 
@@ -16,6 +15,12 @@ $grupo->buscar();
     <title>Document</title>
 </head>
 <body>
-    
+    <h2>Tu equipo se compone de: </h2>
+    <hr>
+
+    <?php
+    $grupo->buscar();
+    ?>
+
 </body>
 </html>
