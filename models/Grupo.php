@@ -1,4 +1,7 @@
 <?php
+
+namespace models;
+
 class Grupo {
   
 public function buscar(){

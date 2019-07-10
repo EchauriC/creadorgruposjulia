@@ -1,6 +1,6 @@
 <?php 
 
-require_once 'models/Grupo.php';
+require_once('vendor/autoload.php');
 
 $grupo= new Grupo;
 

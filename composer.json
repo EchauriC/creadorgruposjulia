@@ -1,0 +1,19 @@
+{
+    "name": "grupo-muevete/creadorgrupos",
+    "description": "Trabajo grupal para practicar git. Genera un equipo de desarroladores aleatorio aplicando un filtro. Los datos se consumen de una BD.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "grupoMuevete",
+            "email": "grupoMuevete@server.com"
+        }
+    ],
+
+    "autoload":{
+        "psr-4": {
+            "models\\": "models/"
+        }
+    },
+    "require": {}
+}
