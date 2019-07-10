@@ -2,7 +2,7 @@
 
 require_once('vendor/autoload.php');
 
-$grupo= new Grupo;
+$grupo = new Grupo();
 
 ?>
 
@@ -19,7 +19,7 @@ $grupo= new Grupo;
     <hr>
 
     <?php
-    $grupo->buscar();
+        $grupo->buscar($_POST['cantidad'], $_POST['especialidad']);
     ?>
 
 </body>

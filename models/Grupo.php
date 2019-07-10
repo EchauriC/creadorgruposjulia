@@ -3,47 +3,63 @@
 namespace models;
 
 class Grupo {
-  
-public function buscar(){
 
-    //en el include no salto atras en la carpeta porque la funcion se ejecuta en grupo.php
-    require_once 'datos/datos.php';
+    private $con;
 
-    //traemos los valores del formulario
-    $numero = $_POST['numero'];
-    $especialidad = $_POST['especialidad'];
+    public function __construct() {
+        $this->con = mysqli_connect("localhost","root","","creador_grupos");
 
-    //creamos un array vacio 
-    $especialistas =[];
-
-    foreach($gente as $valor){
-        if ($especialidad == $valor[1]){
-            array_push($especialistas, $valor[0]);
-        } //llenamos el array con la gente que cumple la condicion
+        // Check connection
+        if (mysqli_connect_errno())
+        {
+            die("Failed to connect to MySQL: " . mysqli_connect_error());
+        }
     }
+  
+    public function buscar($cantSolicitada, $especialidad){
 
-    //si hay gente suficiente entre tus especialistas , reordenamos el array y sacamos tantos como hemos pedido
-    if(count($especialistas)>=$numero){
-       
-        shuffle($especialistas);
+        //creamos un array vacio 
+        $especialistas = $this->con->query("SELECT * FROM persona WHERE id_especialidad = (SELECT id_especialidad FROM especialidad WHERE nombre = $especialidad);");
 
-        $contador =1;
+        if ($especialistas !== false) {
+            //SI HEMOS OBTENIDO RESULTADOS
+            //si hay gente suficiente entre tus especialistas , reordenamos el array y sacamos tantos como hemos pedido
+            //Si no hay suficientes, lo indicamos y mostramos los disponibles.
+            $cantEspecialistas = count($especialistas);
+            if($cantEspecialistas > $cantSolicitada){
+            
+                echo "Estas son las personas escogidas de entre las {$cantEspecialistas} disponibles.";
+                shuffle($especialistas);
 
-        foreach($especialistas as $lista){
+                $contador = 1;
 
-            if($contador<=$numero){
-                echo $lista.'<br>';
+                foreach($especialistas as $persona){
+
+                    if($contador<=$cantSolicitada){
+                        echo $persona['nombre'].'<br>';
+                    }
+
+                    $contador++; 
+                }
+
+            //Si no hay gente suficiente sale este mensaje
+            }
+            elseif($cantEspecialistas == $cantSolicitada){
+                echo 'Este proyecto requerirá la participacion de todos los espcialistas de la rama escogída.';
+            }
+            else{
+                echo 'No hay gente suficiente para formar este grupo.';
             }
 
-            $contador= $contador +1; 
+
+        } else {
+            //SI LA BASE DE DATOS NO HA DEVUELTO RESULTADOS
+            echo 'No hay personas con la especialidad indicada.';
         }
+        
 
-    //Si no hay gente suficiente sale este mensaje
-    }else{
-        echo 'No hay gente suficiente para formar este grupo';
+
     }
-
-}
 
 
 
